@@ -14,8 +14,8 @@ def GetDistance(firstCity,secondCity):
     return sqrt(pow(yDistance,2)+pow(xDistance,2))
 
 
-def ReadCities():
-    file=open('Cities.txt')
+def ReadCities(file):
+    file=open(file)
     cities=[]
     for line in file.readlines():
         x,y=line.split('-')
@@ -33,6 +33,6 @@ def MakeDistanceMatrix(cities):
 
     return distances
 
-def Cities():
-    cities=ReadCities()
+def Cities(file='Cities.txt'):
+    cities=ReadCities(file)
     return cities,MakeDistanceMatrix(cities)
