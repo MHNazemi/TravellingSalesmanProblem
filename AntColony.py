@@ -14,29 +14,44 @@ class Ant:
         path=[]
 
         lenDistances=len(distances[currentCityIndex])
-        probabilityDenominator=0
-        for j in range(0,len(pheromones[currentCityIndex])):
-            if j!=currentCityIndex:
-                probabilityDenominator = probabilityDenominator + (pheromones[currentCityIndex][j]*((1/distances[currentCityIndex][j])**2))
+
 
         selectedIndex=[0]*len(distances[currentCityIndex])
+
+        q =0
         for i in range(0,lenDistances-1):
             selectedIndex[currentCityIndex]=1
+
+
+            probabilityDenominator=0
+            for j in range(0,len(pheromones[currentCityIndex])):
+                if j!=currentCityIndex and selectedIndex[j]!=1:
+                    probabilityDenominator = probabilityDenominator + (pheromones[currentCityIndex][j]*((1/distances[currentCityIndex][j])**2))
+
             randomIndex=random.uniform(0,probabilityDenominator)
+
             cumulativeProbability=0
-            for k in range(0,len(distances[currentCityIndex])):
+
+
+            for k in range(0,lenDistances):
+
+
 
                 if selectedIndex[k]==1:
                     continue
-                cumulativeProbability= cumulativeProbability + (pheromones[currentCityIndex][k]*((1/distances[currentCityIndex][k])**2))
-                if randomIndex < cumulativeProbability:
+                if currentCityIndex!=k:
+                    cumulativeProbability= cumulativeProbability + (pheromones[currentCityIndex][k]*((1/distances[currentCityIndex][k])**2))
+
+                if randomIndex <= cumulativeProbability:
                     path.append([currentCityIndex,k])
 
-                    probabilityDenominator=probabilityDenominator-(pheromones[currentCityIndex][k]*((1/distances[currentCityIndex][k])**2))
                     print(k)
-
+                    q = q +1
                     currentCityIndex = k
                     break
+
+
+        print(q)
 
 
 
